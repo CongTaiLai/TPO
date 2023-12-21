@@ -1,0 +1,3 @@
+University to Match Roommates Based on Interests
+
+After many years of matching first-year students with dormitory roommates at random, the university will now try to assign roommates based on similar interests. Before they arrive on campus, all incoming students will fill out a questionnaire about their likes and dislikes and their habits. By matching students with similar interests and habits, the school hopes to improve the experience of first-year students, who will now be more likely to get along well with their roommates. The plan will also reduce work for the housing office because fewer students will ask to switch rooms in the middle of the school year.
