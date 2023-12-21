@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import Extract_text
 
 
 class Ui_StackedWidget(object):
@@ -20,7 +21,6 @@ class Ui_StackedWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(StackedWidget.sizePolicy().hasHeightForWidth())
         StackedWidget.setSizePolicy(sizePolicy)
-        StackedWidget.setFrameShape(QtWidgets.QFrame.Box)
         self.select = QtWidgets.QWidget()
         self.select.setObjectName("select")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.select)
@@ -48,31 +48,20 @@ class Ui_StackedWidget(object):
         self.task1.setObjectName("task1")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.task1)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.Slider1 = QtWidgets.QSlider(self.task1)
-        self.Slider1.setMinimumSize(QtCore.QSize(400, 0))
-        self.Slider1.setOrientation(QtCore.Qt.Horizontal)
-        self.Slider1.setObjectName("Slider1")
-        self.gridLayout_2.addWidget(self.Slider1, 3, 2, 1, 1)
-        self.Play1 = QtWidgets.QToolButton(self.task1)
-        self.Play1.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("res/play_btn.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.Play1.setIcon(icon1)
-        self.Play1.setIconSize(QtCore.QSize(50, 50))
-        self.Play1.setObjectName("Play1")
-        self.gridLayout_2.addWidget(self.Play1, 3, 1, 1, 1)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_2.addItem(spacerItem2, 1, 1, 1, 1)
         self.previous1 = QtWidgets.QToolButton(self.task1)
         self.previous1.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("res/previous.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.previous1.setIcon(icon2)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("res/previous.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.previous1.setIcon(icon1)
         self.previous1.setIconSize(QtCore.QSize(30, 30))
         self.previous1.setObjectName("previous1")
         self.gridLayout_2.addWidget(self.previous1, 0, 0, 1, 1)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_2.addItem(spacerItem3, 4, 1, 1, 1)
+        self.next1 = QtWidgets.QToolButton(self.task1)
+        self.next1.setText("")
+        self.next1.setIcon(icon)
+        self.next1.setIconSize(QtCore.QSize(30, 30))
+        self.next1.setObjectName("next1")
+        self.gridLayout_2.addWidget(self.next1, 0, 3, 1, 1)
         self.label = QtWidgets.QLabel(self.task1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -83,12 +72,9 @@ class Ui_StackedWidget(object):
         self.label.setStyleSheet("")
         self.label.setObjectName("label")
         self.gridLayout_2.addWidget(self.label, 0, 1, 1, 2)
-        self.next1 = QtWidgets.QToolButton(self.task1)
-        self.next1.setText("")
-        self.next1.setIcon(icon)
-        self.next1.setIconSize(QtCore.QSize(30, 30))
-        self.next1.setObjectName("next1")
-        self.gridLayout_2.addWidget(self.next1, 0, 3, 1, 1)
+        self.Article1 = QtWidgets.QTextBrowser(self.task1)
+        self.Article1.setObjectName("Article1")
+        self.gridLayout_2.addWidget(self.Article1, 1, 0, 1, 4)
         StackedWidget.addWidget(self.task1)
         self.task2 = QtWidgets.QWidget()
         self.task2.setObjectName("task2")
@@ -109,13 +95,15 @@ class Ui_StackedWidget(object):
         self.gridLayout.addWidget(self.label_5, 0, 1, 1, 5)
         self.previous2 = QtWidgets.QToolButton(self.task2)
         self.previous2.setText("")
-        self.previous2.setIcon(icon2)
+        self.previous2.setIcon(icon1)
         self.previous2.setIconSize(QtCore.QSize(30, 30))
         self.previous2.setObjectName("previous2")
         self.gridLayout.addWidget(self.previous2, 0, 0, 1, 1)
         self.Play2 = QtWidgets.QToolButton(self.task2)
         self.Play2.setText("")
-        self.Play2.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("res/play_btn.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Play2.setIcon(icon2)
         self.Play2.setIconSize(QtCore.QSize(50, 50))
         self.Play2.setObjectName("Play2")
         self.gridLayout.addWidget(self.Play2, 2, 0, 1, 1)
@@ -144,7 +132,7 @@ class Ui_StackedWidget(object):
         self.gridLayout_3.addWidget(self.Transcript3, 1, 4, 1, 2)
         self.previous3 = QtWidgets.QToolButton(self.task3)
         self.previous3.setText("")
-        self.previous3.setIcon(icon2)
+        self.previous3.setIcon(icon1)
         self.previous3.setIconSize(QtCore.QSize(30, 30))
         self.previous3.setObjectName("previous3")
         self.gridLayout_3.addWidget(self.previous3, 0, 0, 1, 1)
@@ -157,7 +145,7 @@ class Ui_StackedWidget(object):
         self.gridLayout_3.addWidget(self.Article3, 1, 0, 1, 4)
         self.Play3 = QtWidgets.QToolButton(self.task3)
         self.Play3.setText("")
-        self.Play3.setIcon(icon1)
+        self.Play3.setIcon(icon2)
         self.Play3.setIconSize(QtCore.QSize(50, 50))
         self.Play3.setObjectName("Play3")
         self.gridLayout_3.addWidget(self.Play3, 2, 0, 1, 1)
@@ -186,7 +174,7 @@ class Ui_StackedWidget(object):
         self.gridLayout_4.addWidget(self.Transcript4, 2, 0, 1, 5)
         self.Play4 = QtWidgets.QToolButton(self.task4)
         self.Play4.setText("")
-        self.Play4.setIcon(icon1)
+        self.Play4.setIcon(icon2)
         self.Play4.setIconSize(QtCore.QSize(50, 50))
         self.Play4.setObjectName("Play4")
         self.gridLayout_4.addWidget(self.Play4, 1, 0, 1, 2)
@@ -196,7 +184,7 @@ class Ui_StackedWidget(object):
         self.gridLayout_4.addWidget(self.Slider4, 1, 2, 1, 1)
         self.previous4 = QtWidgets.QToolButton(self.task4)
         self.previous4.setText("")
-        self.previous4.setIcon(icon2)
+        self.previous4.setIcon(icon1)
         self.previous4.setIconSize(QtCore.QSize(30, 30))
         self.previous4.setObjectName("previous4")
         self.gridLayout_4.addWidget(self.previous4, 0, 0, 1, 1)
@@ -223,8 +211,9 @@ class Ui_StackedWidget(object):
         StackedWidget.addWidget(self.task4)
 
         self.retranslateUi(StackedWidget)
-        StackedWidget.setCurrentIndex(0)
-        self.Press2.toggled['bool'].connect(self.Transcript2.show) # type: ignore
+        StackedWidget.setCurrentIndex(0
+                                      )
+        self.Press2.toggled['bool'].connect(self.Transcript2.show)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(StackedWidget)
 
         def show_transcript(btn, transcript_widget):
@@ -266,14 +255,40 @@ class Ui_StackedWidget(object):
         self.previous3.clicked.connect(Previous)
         self.previous4.clicked.connect(Previous)
 
+        tests = eval(open('SpeakingDatabase_formatted.txt').read())
+        for t in tests:
+            self.comboBox.addItem(str("TPO " + t))
+
+        def get_test():
+            text = Extract_text.extract(int(self.comboBox.currentText().removeprefix("TPO ")))
+            self.Article1.setText(text[0][0])
+            self.Article2.setText(text[1][0])
+            self.Article3.setText(text[2][0])
+            self.Transcript2.setText(text[1][2])
+            self.Transcript3.setText(text[2][2])
+            self.Transcript4.setText(text[3][1])
+
+        get_test()
+
+        self.comboBox.activated.connect(get_test)
+
+        self.Transcript2.hide()
+        self.Transcript3.hide()
+        self.Transcript4.hide()
+
     def retranslateUi(self, StackedWidget):
         _translate = QtCore.QCoreApplication.translate
         StackedWidget.setWindowTitle(_translate("StackedWidget", "StackedWidget"))
         self.label_2.setText(_translate("StackedWidget", "TPO: "))
-        self.label.setText(_translate("StackedWidget", "<html><head/><body><p align=\"center\">Task1</p></body></html>"))
-        self.label_5.setText(_translate("StackedWidget", "<html><head/><body><p align=\"center\">Task2</p></body></html>"))
-        self.label_6.setText(_translate("StackedWidget", "<html><head/><body><p align=\"center\">Task3</p></body></html>"))
-        self.label_4.setText(_translate("StackedWidget", "<html><head/><body><p align=\"center\">Task4</p></body></html>"))
+        self.label.setText(
+            _translate("StackedWidget", "<html><head/><body><p align=\"center\">Task1</p></body></html>"))
+        self.label_5.setText(
+            _translate("StackedWidget", "<html><head/><body><p align=\"center\">Task2</p></body></html>"))
+        self.label_6.setText(
+            _translate("StackedWidget", "<html><head/><body><p align=\"center\">Task3</p></body></html>"))
+        self.label_4.setText(
+            _translate("StackedWidget", "<html><head/><body><p align=\"center\">Task4</p></body></html>"))
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
