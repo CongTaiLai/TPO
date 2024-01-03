@@ -1,6 +1,5 @@
 import os
 import random
-import re
 import time
 
 import requests
@@ -19,103 +18,153 @@ headers = {
     'Upgrade-Insecure-Requests': '1',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0'}  # Do not change this, or response.text(results) might be different.
 
-# parse links
-links = eval(open((os.getcwd().removesuffix('/scripts/reading') + '/get_indexes/read_indexes.txt')).read())
-formatted_links = {}
-
-for test in links:
-    formatted_links[test] = []
-    for i in links[test]:
-        number = re.findall(r'\d+', i)
-        formatted_links[test].append(number[0])
+d = eval(open('read_indexes.txt', 'r').read()).keys()
+l = []
+for i in d:
+    l.append(i)
+print(l)
 
 
 def craw(soup, i, r):
     db = []
     if i != r - 2 and i != r - 1:  # [article, question, choices 1~4, answer]
         # Paragraph indicator
-        pointer = soup.find('img', {'id': 'ParagraphAr'}).findParent('span', {'class': 'phase'})
-        soup.find('span', {'data-translation': pointer['data-translation']}).insert_before('❖')
+        try:
+            pointer = soup.find('img', {'id': 'ParagraphAr'}).findParent('span', {'class': 'phase'})
+            soup.find('span', {'data-translation': pointer['data-translation']}).insert_before('❖')
+        except Exception:
+            pass
 
         # Article
-        div = soup.find('div', {'class': 'article'})
-        for i in div.find_all('br'):
-            i.replace_with('\n')
-        db.append(div.text.removeprefix('\n'))
+        try:
+            div = soup.find('div', {'class': 'article'})
+            for i in div.find_all('br'):
+                i.replace_with('\n')
+            db.append(div.text.removeprefix('\n'))
+        except Exception:
+            db.append('')
 
         # Question
-        db.append(soup.find('div', {'class': 'left text'}).get_text(strip=True))
+        try:
+            db.append(soup.find('div', {'class': 'left text'}).get_text(strip=True))
+        except Exception:
+            db.append('')
 
         # Choices
-        for btn in soup.find_all('input', {'type': 'radio'}):
-            db.append(btn.parent.find('label').get_text())
+        try:
+            for btn in soup.find_all('input', {'type': 'radio'}):
+                try:
+                    db.append(btn.parent.find('label').get_text())
+                except Exception:
+                    db.append('')
+        except Exception:
+            pass
 
         # Answer
-        db.append(soup.find('div', {'class': 'left correctAnswer'}).get_text().removeprefix('正确答案：'))
+        try:
+            db.append(soup.find('div', {'class': 'left correctAnswer'}).get_text().removeprefix('正确答案：'))
+        except Exception:
+            db.append('')
 
         # save
         database.append(db)
 
     elif i == r - 2:  # [article, question, answer]
         # Paragraph indicator
-        pointer = soup.find('img', {'id': 'ParagraphAr'}).findParent('span', {'class': 'phase'})
-        soup.find('span', {'data-translation': pointer['data-translation']}).insert_before('❖')
+        try:
+            pointer = soup.find('img', {'id': 'ParagraphAr'}).findParent('span', {'class': 'phase'})
+            soup.find('span', {'data-translation': pointer['data-translation']}).insert_before('❖')
+        except Exception:
+            pass
 
         # Article
-        div = soup.find('div', {'class': 'article'})
-        for i in div.find_all('br'):
-            i.replace_with('\n')
-        db.append(div.text.removeprefix('\n'))
+        try:
+            div = soup.find('div', {'class': 'article'})
+            for i in div.find_all('br'):
+                i.replace_with('\n')
+            db.append(div.text.removeprefix('\n'))
+        except Exception:
+            db.append('')
 
         # Question
-        db.append(soup.find('p', {'class': 'ops empis'}).get_text(strip=True))
+        try:
+            db.append(soup.find('p', {'class': 'ops empis'}).get_text(strip=True))
+        except Exception:
+            db.append('')
 
         # Answer
-        db.append(soup.find('div', {'class': 'left correctAnswer'}).get_text().removeprefix('正确答案：'))
+        try:
+            db.append(soup.find('div', {'class': 'left correctAnswer'}).get_text().removeprefix('正确答案：'))
+        except Exception:
+            db.append('')
 
         # save
         database.append(db)
 
     elif i == r - 1:  # [article, choices 1~6, answer]
         # Article
-        div = soup.find('div', {'class': 'article'})
-        for i in div.find_all('br'):
-            i.replace_with('\n')
-        db.append(div.text.removeprefix('\n'))
+        try:
+            div = soup.find('div', {'class': 'article'})
+            for i in div.find_all('br'):
+                i.replace_with('\n')
+            db.append(div.text.removeprefix('\n'))
+        except Exception:
+            db.append('')
 
         # Choices
-        ch = soup.find_all('p', {'class': 'ops dragsec'})
-        for c in ch:
-            db.append(c.get_text(strip=True))
+        try:
+            ch = soup.find_all('p', {'class': 'ops dragsec'})
+            for c in ch:
+                try:
+                    db.append(c.get_text(strip=True))
+                except Exception:
+                    pass
+        except Exception:
+            pass
 
         # Answer
-        db.append(soup.find('div', {'class': 'left correctAnswer'}).get_text().removeprefix('正确答案：'))
+        try:
+            db.append(soup.find('div', {'class': 'left correctAnswer'}).get_text().removeprefix('正确答案：'))
+        except Exception:
+            db.append('')
 
         # save
         database.append(db)
 
 
-for test in formatted_links:
-    if int(test) <= 54:
-        r = 14
-    else:
-        r = 10
+while True:
+    dic = eval(open('read_indexes.txt', 'r').read())
 
-    for test_task in formatted_links[test]:
+    if len(dic) == 0:
+        break
+
+    test = dic[l[0]]
+
+    for task in test:
+        print(task)
+
+        if int(l[0]) <= 54:
+            r = 14
+        else:
+            r = 10
+
         global database
         database = []
 
         for i in range(r):
-            response = requests.get(f'https://top.zhan.com/toefl/read/practicereview-{test_task}-13-0-{i}.html',
+            response = requests.get(f'https://top.zhan.com/toefl/read/practicereview-{task}-13-0-{i}.html',
                                     headers=headers)
             soup = BeautifulSoup(response.text, 'html.parser')
 
             craw(soup, i, r)
+        time.sleep(random.randint(30, 50) * 0.1)
 
-            time.sleep(random.randint(30, 50) * 0.1)
-
-        with open(str(os.getcwd().replace('/scripts/reading', '') + '/downloaded_resources/Reading' + test + '_' + str(
-                formatted_links[test].index(test_task) + 1) + '.txt'), 'w') as file:
+        with open(str(os.getcwd().replace('/scripts/reading', '') + '/downloaded_resources/Reading/TPO' + str(
+                l[0]) + '_' + str(test.index(task) + 1) + '.txt'), 'w') as file:
             file.write(str(database))
 
-        print('a')
+    del dic[l[0]]
+    del l[0]
+
+    open('read_indexes.txt', 'w').write(str(dic))
+    print('a')
