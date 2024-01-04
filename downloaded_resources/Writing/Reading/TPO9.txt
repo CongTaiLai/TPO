@@ -1,0 +1,10 @@
+
+
+Car manufacturers and governments have been eagerly seeking a replacement for the automobile's main source of power, the internal-combustion engine. By far the most promising alternative source of energy for cars is the hydrogen-based fuel-cell engine, which uses hydrogen to create electricity that, in turn, powers the car. Fuel-cell engines have several advantages over internal-combustion engines and will probably soon replace them.
+
+One of the main problems with the internal-combustion engine is that it relies on petroleum, either in the form of gasoline or diesel fuel. Petroleum is a finite resource; someday, we will run out of oil. The hydrogen needed for fuel-cell engines cannot easily be depleted. Hydrogen can be derived from various plentiful sources, including natural gas and even water. The fact that fuel-cell engines utilize easily available, renewable resources makes them particularly attractive.
+
+Second, hydrogen-based fuel cells are attractive because they will solve many of the world's pollution problems. An unavoidable by-product of burning oil is carbon dioxide, and carbon dioxide harms the environment. On the other hand, the only byproduct of fuel-cell engines is water.
+
+Third, fuel-cell engines will soon be economically competitive because people will spend less money to operate a fuel-cell engine than they will to operate an internal-combustion engine. This is true for one simple reason: a fuel-cell automobile is nearly twice as efficient in using its fuel as an automobile powered by an internal-combustion engine is. In other words, the fuel-cell powered car requires only halfthe fuel energy that the internal-combustion powered car does to go the same distance.
+ 

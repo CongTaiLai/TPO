@@ -1,0 +1,16 @@
+
+
+In the United States, medical information about patients traditionally has been recorded and stored on paper forms. However, there are efforts to persuade doctors to adopt electronic medical record systems in which information about patients is stored in electronic databases rather than on paper. It is argued that storing patients’ medical records in electronic databases has several advantages over traditional paper-based record keeping.
+
+Reducing Costs
+
+First, the use of electronic records can help reduce costs by saving money on storing and transferring medical records. While paper records require a significant amount of storage space, electronic medical records take up virtually no space. Moreover, by having patients’ records computerized in databases, doctors can easily access the records from almost anywhere and can easily duplicate and transfer them when necessary. This costs much less than copying, faxing, or transporting paper records from one location to another.
+
+Preventing Errors
+
+Second, electronic medical records are crucial to reducing the chances of medical errors. Illegible handwriting, improper transcription of data, and nonstandard organization of paper records have caused errors that in some cases have had serious consequences for the patients’ health. In contrast, electronic records are associated with standardization of forms and legible computer fonts and thus minimize the possibility of human error.
+
+Aiding Research
+
+Third, electronic medical records can greatly aid medical research by making it possible to gather large amounts of data from patient records. It is often impractical, impossible, or prohibitively expensive to manually go through thousands of patients’ paper records housed in doctors’ offices. However, with the existence of electronic medical records, it would be simple to draw out the needed information from the medical databases because the databases are already formatted for data collection. Once in the electronic system, the records could be accessed from any research location.
+ 
