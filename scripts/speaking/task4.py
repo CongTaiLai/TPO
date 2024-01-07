@@ -5,13 +5,13 @@ import random
 
 available_tests = {}  # test_number: url
 
-with open('SpeakingDatabase_formatted.txt', 'r') as database:
+with open('../speak_indexes.txt', 'r') as database:
     d = eval(database.read())
     for i in d:
         if len(d[i]) == 4:
-            available_tests[i] = d[i][1]
+            available_tests[i] = d[i][3]
         elif len(d[i]) == 6:
-            available_tests[i] = d[i][2]
+            available_tests[i] = d[i][5]
 
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -35,7 +35,7 @@ headers = {
 
 def download_file(url, headers=None, test_index=0):
     response = requests.get(url, headers=headers)
-    file_name = f"DownloadedResources/Task2/Listening/TPO{test_index}.mp3"
+    file_name = f"DownloadedResources/Speaking/Task4/Listening/TPO{test_index}.mp3"
     with open(file_name, "wb") as file:
         file.write(response.content)
 
@@ -46,12 +46,6 @@ for test in available_tests:
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
 
-    # Article
-    # /html/body/div[4]/div[1]/div/div/div/span[1]
-    article = soup.find('div', {'class': 'article'}).get_text()
-    with open(f"DownloadedResources/Task2/Reading/TPO{test}.txt", "w") as file:
-        file.write(article)
-
     # MP3
     # /html/body/div[4]/div[1]/div/div/div/div[2]/div[2]/input
     audio = soup.find('input', {'id': 'speaking_review'})['value']
@@ -60,7 +54,7 @@ for test in available_tests:
     # Transcript
     # /html/body/div[4]/div[1]/div/div/div/div[2]/div[4]/div
     transcript = soup.find('div', {'class': 'audio_topic'}).get_text()
-    with open(f"DownloadedResources/Task2/Transcripts/TPO{test}.txt", "w") as file:
+    with open(f"DownloadedResources/Task4/Transcripts/TPO{test}.txt", "w") as file:
         file.write(transcript)
 
     time.sleep(0.1 * random.randint(30, 50))

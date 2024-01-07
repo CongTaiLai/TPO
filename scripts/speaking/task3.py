@@ -5,7 +5,7 @@ import random
 
 available_tests = {}  # test_number: url
 
-with open('SpeakingDatabase_formatted.txt', 'r') as database:
+with open('../speak_indexes.txt', 'r') as database:
     d = eval(database.read())
     for i in d:
         if len(d[i]) == 4:
@@ -35,7 +35,7 @@ headers = {
 
 def download_file(url, headers=None, test_index=0):
     response = requests.get(url, headers=headers)
-    file_name = f"DownloadedResources/Task3/Listening/TPO{test_index}.mp3"
+    file_name = f"DownloadedResources/Speaking/Task3/Listening/TPO{test_index}.mp3"
     with open(file_name, "wb") as file:
         file.write(response.content)
 

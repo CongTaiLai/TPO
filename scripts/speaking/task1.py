@@ -5,7 +5,7 @@ import random
 
 available_tests = {}  # test_number: url
 
-with open('SpeakingDatabase_formatted.txt', 'r') as database:
+with open('../speak_indexes.txt', 'r') as database:
     d = eval(database.read())
     for i in d:
         if len(d[i]) == 4:
@@ -41,7 +41,7 @@ for test in available_tests:
     # Article
     # /html/body/div[4]/div[1]/div/div/div/span[1]
     article = soup.find('p', {'class': 'article'}).get_text().replace('\n', '').replace('  ', '')
-    with open(f"DownloadedResources/Task1/Reading/TPO{test}.txt", "w") as file:
+    with open(f"DownloadedResources/Speaking/Task1/Reading/TPO{test}.txt", "w") as file:
         file.write(article)
 
     time.sleep(0.1 * random.randint(30, 50))
