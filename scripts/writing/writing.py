@@ -26,7 +26,8 @@ while True:
 
     current = dic.popitem()
     test_number = current[0]
-    url = current[1]
+    url = current[1][0]
+    print(url)
 
     driver = webdriver.Edge()
     driver.get(url)
@@ -41,7 +42,7 @@ while True:
     for div in article.contents:
         txt += div.get_text() + '\n'
 
-    response_file = requests.get(url, headers=headers).content
+    response_file = requests.get(element.get_attribute('src'), headers=headers).content
 
     transcripts = soup.find('div', {'class': 'audio_topic'}).get_text()
 
@@ -56,4 +57,5 @@ while True:
 
     open('write_indexes.txt', 'w').write(str(dic))
 
-    time.sleep(random.randint(30,50)*0.1)
+    print(test_number)
+    time.sleep(random.randint(30, 50) * 0.1)
