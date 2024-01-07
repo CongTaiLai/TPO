@@ -9,7 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 import Extract_text
+import librosa
 
 
 class Ui_StackedWidget(object):
@@ -38,7 +40,7 @@ class Ui_StackedWidget(object):
         self.next0 = QtWidgets.QToolButton(self.select)
         self.next0.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("res/next.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../UI/res/next.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.next0.setIcon(icon)
         self.next0.setIconSize(QtCore.QSize(30, 30))
         self.next0.setObjectName("next0")
@@ -51,7 +53,7 @@ class Ui_StackedWidget(object):
         self.previous1 = QtWidgets.QToolButton(self.task1)
         self.previous1.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("res/previous.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("../UI/res/previous.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.previous1.setIcon(icon1)
         self.previous1.setIconSize(QtCore.QSize(30, 30))
         self.previous1.setObjectName("previous1")
@@ -102,7 +104,7 @@ class Ui_StackedWidget(object):
         self.Play2 = QtWidgets.QToolButton(self.task2)
         self.Play2.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("res/play_btn.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("../UI/res/play_btn.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Play2.setIcon(icon2)
         self.Play2.setIconSize(QtCore.QSize(50, 50))
         self.Play2.setObjectName("Play2")
@@ -111,10 +113,9 @@ class Ui_StackedWidget(object):
         self.Transcript2.setObjectName("Transcript2")
         self.gridLayout.addWidget(self.Transcript2, 1, 3, 1, 4)
         self.Press2 = QtWidgets.QToolButton(self.task2)
-        self.Press2.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("res/right.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon3.addPixmap(QtGui.QPixmap("res/left.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap("../UI/res/right.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("../UI/res/left.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.Press2.setIcon(icon3)
         self.Press2.setIconSize(QtCore.QSize(50, 50))
         self.Press2.setObjectName("Press2")
@@ -153,7 +154,6 @@ class Ui_StackedWidget(object):
         self.label_6.setObjectName("label_6")
         self.gridLayout_3.addWidget(self.label_6, 0, 1, 1, 4)
         self.Press3 = QtWidgets.QToolButton(self.task3)
-        self.Press3.setText("")
         self.Press3.setIcon(icon3)
         self.Press3.setIconSize(QtCore.QSize(50, 50))
         self.Press3.setObjectName("Press3")
@@ -196,14 +196,12 @@ class Ui_StackedWidget(object):
         self.next4.setText("")
         self.next4.setIcon(icon)
         self.next4.setIconSize(QtCore.QSize(30, 30))
-        self.next4.setCheckable(False)
         self.next4.setObjectName("next4")
         self.gridLayout_4.addWidget(self.next4, 0, 4, 1, 1)
         self.Press4 = QtWidgets.QToolButton(self.task4)
-        self.Press4.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("res/down.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon4.addPixmap(QtGui.QPixmap("res/up.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon4.addPixmap(QtGui.QPixmap("../UI/res/down.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("../UI/res/up.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.Press4.setIcon(icon4)
         self.Press4.setIconSize(QtCore.QSize(50, 50))
         self.Press4.setObjectName("Press4")
@@ -255,7 +253,7 @@ class Ui_StackedWidget(object):
         self.previous3.clicked.connect(Previous)
         self.previous4.clicked.connect(Previous)
 
-        tests = eval(open('SpeakingDatabase_formatted.txt').read())
+        tests = eval(open('../SpeakingDatabase_formatted.txt').read())
         for t in tests:
             self.comboBox.addItem(str("TPO " + t))
 
@@ -268,9 +266,60 @@ class Ui_StackedWidget(object):
             self.Transcript3.setText(text[2][2])
             self.Transcript4.setText(text[3][1])
 
+        text = Extract_text.extract(int(self.comboBox.currentText().removeprefix("TPO ")))
+        self.player2 = QMediaPlayer()
+        self.audio2 = QMediaContent(QtCore.QUrl.fromLocalFile(text[1][1]))
+        self.audio2_path = text[1][1]
+        self.player2.setMedia(self.audio2)
+        self.Slider2.setMaximum(int(librosa.get_duration(path=self.audio2_path) * float(1000)))
+
+        self.player3 = QMediaPlayer()
+        self.audio3 = QMediaContent(QtCore.QUrl.fromLocalFile(text[2][1]))
+        self.audio3_path = text[2][1]
+        self.player3.setMedia(self.audio3)
+        self.Slider3.setMaximum(int(librosa.get_duration(path=self.audio3_path) * float(1000)))
+
+        self.player4 = QMediaPlayer()
+        self.audio4 = QMediaContent(QtCore.QUrl.fromLocalFile(text[3][0]))
+        self.audio4_path = text[3][0]
+        self.player4.setMedia(self.audio4)
+        self.Slider4.setMaximum(int(librosa.get_duration(path=self.audio4_path) * float(1000)))
+
+        def p(player_, value):
+            player_.setPosition(value)
+
+        p_2 = lambda: p(self.player2, self.Slider2.value())
+        p_3 = lambda: p(self.player3, self.Slider3.value())
+        p_4 = lambda: p(self.player4, self.Slider4.value())
+
+        def play(btn, player):
+            if btn.isChecked():
+                player.play()
+            elif not btn.isChecked():
+                player.pause()
+
+        play_2 = lambda: play(self.Play2, self.player2)
+        play_3 = lambda: play(self.Play3, self.player3)
+        play_4 = lambda: play(self.Play4, self.player4)
+
+        self.Slider2.valueChanged.connect(p_2)
+        self.Slider2.setValue(self.player2.position())
+        self.Slider3.valueChanged.connect(p_3)
+        self.Slider3.setValue(self.player3.position())
+        self.Slider4.valueChanged.connect(p_4)
+        self.Slider4.setValue(self.player4.position())
+
+        self.Play2.clicked.connect(play_2)
+        self.Play3.clicked.connect(play_3)
+        self.Play4.clicked.connect(play_4)
+
         get_test()
 
         self.comboBox.activated.connect(get_test)
+
+        self.Play2.setCheckable(True)
+        self.Play3.setCheckable(True)
+        self.Play4.setCheckable(True)
 
         self.Transcript2.hide()
         self.Transcript3.hide()
