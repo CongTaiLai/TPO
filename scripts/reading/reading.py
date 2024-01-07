@@ -18,7 +18,7 @@ headers = {
     'Upgrade-Insecure-Requests': '1',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0'}  # Do not change this, or response.text(results) might be different.
 
-d = eval(open('read_indexes_backup.txt', 'r').read()).keys()
+d = eval(open('read_indexes.txt', 'r').read()).keys()
 l = []
 for i in d:
     l.append(i)
@@ -51,14 +51,18 @@ def craw(soup, i, r):
             db.append('')
 
         # Choices
-        try:
+        if soup.find_all('input', {'type': 'radio'}) != []:
             for btn in soup.find_all('input', {'type': 'radio'}):
                 try:
                     db.append(btn.parent.find('label').get_text())
                 except Exception:
                     db.append('')
-        except Exception:
-            pass
+        else:
+            for choice in soup.find_all('p', {'class': 'ops sec'}):
+                try:
+                    db.append(choice.get_text(strip=True))
+                except Exception:
+                    db.append('')
 
         # Answer
         try:
@@ -133,7 +137,7 @@ def craw(soup, i, r):
 
 
 while True:
-    dic = eval(open('read_indexes_backup.txt', 'r').read())
+    dic = eval(open('read_indexes.txt', 'r').read())
 
     if len(dic) == 0:
         break
@@ -166,5 +170,5 @@ while True:
     del dic[l[0]]
     del l[0]
 
-    open('read_indexes_backup.txt', 'w').write(str(dic))
+    open('read_indexes.txt', 'w').write(str(dic))
     print('a')
